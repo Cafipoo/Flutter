@@ -14,12 +14,13 @@
 
 ## 🪜 Étape 1 — Préparer la structure du quiz
 
-Crée un fichier `lib/quiz_page.dart` et ajoute :
+Pour garder un code propre et maintenable, nous allons séparer notre application en plusieurs petits fichiers. C'est ce qu'on appelle la **composition**.
+
+### 1. Les modèles de données
+Crée `lib/models.dart`. Ce fichier contient la description de nos données (sans aucun widget). Dans un gros projet il faudrait les mettre dans un dossier `models/` et créer un fichier par modèle, mais pour ce TP un seul fichier suffira.
 
 ```dart
-import 'package:flutter/material.dart';
-
-// Modèles de données typés
+// lib/models.dart
 class Answer {
   final String text;
   final bool isCorrect;
@@ -33,6 +34,41 @@ class Question {
 
   Question({required this.question, required this.answers});
 }
+```
+
+### 2. Les composants graphiques (Widgets)
+Au lieu de tout mettre dans un seul fichier, nous allons extraire certains éléments dans des widgets séparés.
+
+Crée `lib/question_text.dart` pour l'affichage de la question :
+```dart
+import 'package:flutter/material.dart';
+
+class QuestionText extends StatelessWidget {
+  final String questionText;
+
+  const QuestionText({
+    super.key,
+    required this.questionText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      questionText,
+      style: const TextStyle(fontSize: 20),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+```
+
+### 3. La page principale du Quiz
+Maintenant, nous assemblons le tout dans `lib/quiz_page.dart`.
+
+```dart
+import 'package:flutter/material.dart';
+import 'models.dart';
+import 'question_text.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -40,12 +76,7 @@ class QuizPage extends StatefulWidget {
   @override
   State<QuizPage> createState() => _QuizPageState();
 }
-```
 
-> **💡 Pourquoi StatefulWidget ?**
-> Un **StatefulWidget** est un widget qui peut "se souvenir" de choses et changer au fil du temps. Ici, ton quiz doit se souvenir de la question actuelle et du score. C'est différent d'un **StatelessWidget** qui est figé et ne change jamais. Pense à StatefulWidget comme une page avec un compteur qui bouge, et StatelessWidget comme une pancarte fixe.
-
-```dart
 class _QuizPageState extends State<QuizPage> {
   int currentQuestion = 0;
   int score = 0;
@@ -112,19 +143,16 @@ class _QuizPageState extends State<QuizPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              question.question,  // Pas de cast ! Typage direct
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
+            QuestionText(questionText: question.question),
             const SizedBox(height: 20),
+            // On génère les boutons de réponse directement ici
             ...question.answers.map((answer) {
               return Container(
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(vertical: 6),
                 child: ElevatedButton(
                   onPressed: () => answerQuestion(answer.isCorrect),
-                  child: Text(answer.text),  // Pas de cast !
+                  child: Text(answer.text),
                 ),
               );
             }),
@@ -136,17 +164,20 @@ class _QuizPageState extends State<QuizPage> {
 }
 ```
 
-> **💡 Notions clés expliquées :**
-> - **StatefulWidget** : Un widget qui peut "se souvenir" de choses et changer au fil du temps (contrairement à StatelessWidget qui est figé). Ici, le quiz doit se souvenir de la question actuelle et du score.
-> - **setState()** : Dit à Flutter "j'ai changé quelque chose, redessine l'écran !". Sans setState(), même si tu modifies `currentQuestion`, l'interface ne se met pas à jour.
+> **💡 Pourquoi StatefulWidget ?**
+> Un **StatefulWidget** est un widget qui peut "se souvenir" de choses et changer au fil du temps. Ici, ton quiz doit se souvenir de la question actuelle et du score. C'est différent d'un **StatelessWidget** qui est figé et ne change jamais. Pense à StatefulWidget comme une page avec un compteur qui bouge, et StatelessWidget comme une pancarte fixe.
+
+> **💡 Notions clés :**
+> - **Composition** : On extrait les parties répétitives ou complexes dans des widgets séparés (comme `QuestionText`) pour garder un code propre.
+> - **setState()** : Dit à Flutter "j'ai changé quelque chose, redessine l'écran !". Sans `setState()`, même si tu modifies `currentQuestion`, l'interface ne se met pas à jour.
 > - **Cycle de vie - initState() vs build()** :
->   - `initState()` : Appelé UNE SEULE FOIS quand le widget est créé. Parfait pour charger des données initiales ou configurer des écouteurs.
->   - `build()` : Appelé À CHAQUE FOIS que le widget doit se redessiner (après chaque `setState()`). C'est ici que tu construis ton interface.
->   - Règle d'or : Ce qui doit se faire qu'une fois → `initState()`. Ce qui décrit l'interface → `build()`.
+>   - `initState()` : Appelé **une seule fois** quand le widget est créé. Parfait pour charger des données initiales ou configurer des écouteurs.
+>   - `build()` : Appelé **à chaque fois** que le widget doit se redessiner (après chaque `setState()`). C'est ici que tu construis ton interface.
+>   - *Règle d'or* : Ce qui doit se faire qu'une fois → `initState()`. Ce qui décrit l'interface → `build()`.
 > - **`...` (spread operator)** : "Décompresse" une liste pour en étaler les éléments. Utilisé ici pour afficher tous les boutons de réponses.
 > - **`.map()`** : Transforme chaque élément d'une liste. Pour chaque réponse, on crée un bouton.
 
-Puis modifie ton `lib/main.dart` :
+Enfin, n'oublie pas de mettre à jour ton `lib/main.dart` :
 
 ```dart
 import 'package:flutter/material.dart';
@@ -174,16 +205,33 @@ class MyApp extends StatelessWidget {
 
 ## 🪜 Étape 2 — Améliorer l’expérience utilisateur
 
-Ajoute :
-- un compteur de progression (“Question 2 sur 3”)  
-- un feedback visuel lorsque tu cliques sur une réponse (couleur différente pour bonne/mauvaise réponse)  
+Pour l'instant, le quiz passe tout de suite à la question suivante dès qu'on clique. C'est un peu brutal !
+Nous allons ajouter une étape de validation et du feedback.
 
-Tu peux utiliser un `SnackBar` :
-```dart
-ScaffoldMessenger.of(context).showSnackBar(
-  SnackBar(content: Text(isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse...')),
-);
-```
+**Tes missions :**
+1.  Ajoute un **compteur de progression** (ex: “Question 2 sur 3”) en haut de la page.
+2.  Modifie le comportement pour que le clic sur une réponse la **sélectionne** (changement de couleur) mais ne passe pas encore à la suite.
+3.  Ajoute un bouton **"Suivant"** en bas de l'écran :
+    *   Il doit être **désactivé (grisé)** tant que l'utilisateur n'a pas choisi de réponse.
+    *   Quand on clique dessus, il valide la réponse et passe à la question suivante.
+4.  Ajoute un **feedback visuel** lors de la validation pour indiquer si la réponse était bonne ou mauvaise (via un `SnackBar` ou un changement de couleur temporaire).
+
+> **💡 Comment afficher un message rapide ?**
+> Tu peux utiliser un `SnackBar` pour donner un feedback immédiat :
+> ```dart
+> ScaffoldMessenger.of(context).showSnackBar(
+>   SnackBar(content: Text(isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse...')),
+> );
+> ```
+
+> **💡 Indice pour le bouton désactivé** :
+> Dans un `ElevatedButton`, si `onPressed` vaut `null`, le bouton devient automatiquement grisé et inactif !
+> ```dart
+> ElevatedButton(
+>   onPressed: selectedAnswer == null ? null : () { ... },
+>   child: const Text('Suivant'),
+> )
+> ```
 
 ---
 
@@ -203,6 +251,7 @@ Inspire-toi des guidelines Material Design !
 À la fin du TP, ton application doit :
 - Afficher une série de **questions à choix multiples**
 - Gérer la **progression et le score**
+- Demander une **confirmation** via un bouton "Suivant" avant de changer de question
 - Afficher un **écran de résultat** clair et redémarrer le quiz
 - Avoir un **design personnalisé et agréable**
 
@@ -213,7 +262,7 @@ Inspire-toi des guidelines Material Design !
 ## 💾 Rendu attendu
 
 - Projet Flutter complet nommé : **`tp2_nom_prenom`**  
-- Capture d’écran du quiz en cours et du score final  
+- Capture d’écran du quiz en cours (avec une sélection active) et du score final  
 - Lien GitHub
 
 ---
@@ -222,14 +271,14 @@ Inspire-toi des guidelines Material Design !
 
 | Critère | Détails | Points |
 |----------|----------|--------|
-| **Structure du projet** | Organisation des fichiers, code clair, indentation correcte | 3 |
+| **Structure du projet** | Organisation des fichiers (modèles, widgets), code clair | 3 |
 | **Gestion d’état (`setState`)** | Bonne utilisation de la logique et mise à jour de l’UI | 3 |
-| **Affichage des questions** | Liste fonctionnelle et bien présentée | 2 |
+| **Logique de sélection** | Sélection visuelle d'une réponse + Bouton Suivant actif/inactif | 3 |
+| **Affichage et Progression** | Liste des questions, compteur "Question X/Y" | 2 |
 | **Calcul du score** | Score exact et affiché correctement | 2 |
-| **Interaction et feedback** | Boutons réactifs, progression claire | 2 |
 | **Design et ergonomie** | UI soignée, marges, cohérence visuelle | 3 |
-| **Code et bonnes pratiques** | Respect des conventions Flutter/Dart, propreté du code | 2 |
-| **Créativité et personnalisation** | Améliorations visuelles, animations, styles | 3 |
+| **Code et bonnes pratiques** | Respect des conventions Flutter/Dart, typage fort | 2 |
+| **Créativité** | Améliorations visuelles, animations, styles | 2 |
 | **Total** |  | **/20** |
 
 ---
