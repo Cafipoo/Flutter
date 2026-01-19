@@ -3,18 +3,42 @@
       "title": "Inception",
       "year": 2010,
       "poster": "https://image.tmdb.org/t/p/w500/aej3LRUga5rhgkmRP6XMFw3ejbl.jpg",
-      "description": "Un voleur qui s'infiltre dans les rêves des gens pour voler leurs secrets se voit confier une mission impossible : implanter une idée dans l'esprit d'un PDG."
+      "description": "Un voleur qui s'infiltre dans les rêves des gens pour voler leurs secrets se voit confier une mission impossible : implanter une idée dans l'esprit d'un PDG.",
+      "trailer": "YoHD9XEInc0"
     },
     {
       "title": "Interstellar",
       "year": 2014,
       "poster": "https://image.tmdb.org/t/p/w500/1pnigkWWy8W032o9TKDneBa3eVK.jpg",
-      "description": "Une équipe d'explorateurs voyage à travers un trou de ver dans l'espace pour assurer la survie de l'humanité face à la fin de la Terre."
+      "description": "Une équipe d'explorateurs voyage à travers un trou de ver dans l'espace pour assurer la survie de l'humanité face à la fin de la Terre.",
+      "trailer": "zSWdZVtXT7E"
     },
     {
       "title": "The Dark Knight",
       "year": 2008,
       "poster": "https://image.tmdb.org/t/p/w500/pyNXnq8QBWoK3b37RS6C3axwUOy.jpg",
-      "description": "Batman affronte le Joker, un criminel chaotique qui plonge Gotham dans l'anarchie et force le chevalier noir à affronter ses propres limites morales."
+      "description": "Batman affronte le Joker, un criminel chaotique qui plonge Gotham dans l'anarchie et force le chevalier noir à affronter ses propres limites morales.",
+      "trailer": "EXeTwQWrcwY"
+    },
+    {
+      "title": "Cars",
+      "year": 2006,
+      "poster": "https://image.tmdb.org/t/p/w500/abW5AzHDaIK1n9C36VdAeOwORRA.jpg",
+      "description": "Flash McQueen, une voiture de course ambitieuse, se retrouve bloquée dans une petite ville oubliée où il apprend que la vie ne se résume pas à gagner des courses.",
+      "trailer": "SbXIj2T-_uk"
+    },
+    {
+      "title": "Cars 2",
+      "year": 2011,
+      "poster": "https://image.tmdb.org/t/p/w500/okIz1HyxeVOMzYwwHUjH2pHi74I.jpg",
+      "description": "Flash McQueen et son ami Martin se retrouvent mêlés à une aventure d'espionnage internationale lors du Grand Prix Mondial.",
+      "trailer": "oFTfAdauCOI"
+    },
+    {
+      "title": "Cars 3",
+      "year": 2017,
+      "poster": "https://image.tmdb.org/t/p/w500/4Qbfp1oDsZChdfUX6IPLsEVBQ6s.jpg",
+      "description": "Flash McQueen doit affronter une nouvelle génération de voitures de course ultra-rapides et prouver qu'il a encore sa place sur la piste.",
+      "trailer": "2LeOH9AGJQM"
     }
 ]

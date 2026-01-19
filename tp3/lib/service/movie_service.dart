@@ -6,12 +6,14 @@ class Movie {
   final int year;
   final String poster;
   final String description;
+  final String? trailer; // ID YouTube de la bande-annonce
 
   Movie({
     required this.title,
     required this.year,
     required this.poster,
     required this.description,
+    this.trailer,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Movie {
       year: json['year'],
       poster: json['poster'],
       description: json['description'],
+      trailer: json['trailer'] as String?,
     );
   }
 }

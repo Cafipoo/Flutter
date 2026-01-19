@@ -91,50 +91,6 @@ tp2/
 └── pubspec.yaml
 ```
 
-## 🎯 Objectifs atteints
-
-### Structure du projet (3 points)
-- ✅ Organisation claire des fichiers (modèles, widgets, services)
-- ✅ Code propre et maintenable
-- ✅ Séparation des responsabilités
-
-### Gestion d'état (3 points)
-- ✅ Utilisation correcte de `setState()`
-- ✅ Mise à jour de l'UI après chaque action
-- ✅ Gestion du timer avec animations
-
-### Logique de sélection (3 points)
-- ✅ Sélection visuelle d'une réponse (changement de couleur)
-- ✅ Bouton "Suivant" actif/inactif selon l'état
-- ✅ Validation avec feedback visuel
-
-### Affichage et progression (2 points)
-- ✅ Liste des questions affichée
-- ✅ Compteur "Question X/Y" visible
-
-### Calcul du score (2 points)
-- ✅ Score exact calculé
-- ✅ Affichage correct du score final
-
-### Design et ergonomie (3 points)
-- ✅ UI soignée avec gradients et couleurs
-- ✅ Marges et espacements cohérents
-- ✅ Design moderne et agréable
-
-### Code et bonnes pratiques (2 points)
-- ✅ Respect des conventions Flutter/Dart
-- ✅ Typage fort et code structuré
-
-### Créativité (2 points)
-- ✅ Améliorations visuelles (gradients, animations)
-- ✅ Widgets personnalisés réutilisables
-
-### Bonus (1.5 points)
-- ✅ Timer avec animation fluide (+0.5)
-- ✅ Page des meilleurs scores avec stockage local (+1)
-
-**Total estimé : 21.5/20** 🎯
-
 ## 🔧 Fonctionnalités techniques
 
 ### Timer
@@ -167,6 +123,3 @@ tp2/
 
 [Voir le projet sur GitHub](https://github.com/Cafipoo/Flutter/tree/main/tp2)
 
-## 📝 Notes
-
-Le projet respecte toutes les consignes du TP2 et inclut les deux bonus. Le code est organisé, documenté et suit les bonnes pratiques Flutter. Le design est moderne, coloré et agréable à utiliser.
