@@ -7,9 +7,9 @@
         
 
         {
-            "name": "tp2 (Flutter Medium Phone API 36.1)",
+            "name": "tp3 (Flutter Medium Phone API 36.1)",
             "program": "lib/main.dart",
-            "cwd": "tp2",
+            "cwd": "tp3",
             "deviceId": "emulator-5554",
             "request": "launch",
             "type": "dart"
