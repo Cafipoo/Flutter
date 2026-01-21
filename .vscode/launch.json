@@ -7,12 +7,15 @@
         
 
         {
-            "name": "tp3 (Flutter Medium Phone API 36.1)",
+            "name": "tp4 (Flutter Medium Phone API 36.1)",
             "program": "lib/main.dart",
-            "cwd": "tp3",
+            "cwd": "tp4",
             "deviceId": "emulator-5554",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+              "--dart-define=WATCHMODE_API_KEY=U0tthj9vn8zh2bU0qTh796gfE3aQAt24M2xquzRc"
+            ]
         }
     ]
 }
